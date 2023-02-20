@@ -5,6 +5,6 @@ CREATE TABLE RecipeSteps(
     QuantityID int NOT NULL,
 	CONSTRAINT PK_RecipeSteps PRIMARY KEY (RecipeStepID ASC),
 	CONSTRAINT FK_IngredientID FOREIGN KEY (IngredientID) REFERENCES Ingredients (IngredientID),
-	CONSTRAINT FK_QuantityID FOREIGN KEY (QuantityID) REFERENCES Quantities (QuantityID)
+	CONSTRAINT FK_QuantityID FOREIGN KEY (QuantityID) REFERENCES Quantity (QuantityID)
 );
 GO
