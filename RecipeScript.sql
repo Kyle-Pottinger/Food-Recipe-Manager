@@ -1,14 +1,13 @@
 CREATE TABLE Recipes(
-	RecipeID int PRIMARY NOT NULL,
-	Name_ varchar(20),
-	FoodCategoryID int ,
-	Description_ varchar(MAX),
+	RecipeID int IDENTITY(1,1) NOT NULL,
+	RecipeName varchar(20) NULL,
+	RecipeDescription varchar(MAX) NULL,
+	FoodCategoryID int NULL,
 	EventID int,
-	PrepTime varchar(50),
-	CookTime varchar(50),
-	RecipeStepsID int,
-	CONSTRAINT FK_FoodCategoryID FOREIGN KEY (FoodCategoryID) REFERENCES FoodCategories (FoodCategoryID),
-	CONSTRAINT FK_EventID FOREIGN KEY (EventID) REFERENCES Events (EventID),
-	CONSTRAINT FK_RecipeStepsID FOREIGN KEY (RecipeStepsID) REFERENCES RecipeSteps (RecipeStepsID)
+	PrepTime varchar(50) NULL,
+	CookTime varchar(50) NULL,
+	CONSTRAINT PK_Recipe PRIMARY KEY (RecipeID ASC),
+	CONSTRAINT FK_FoodCategoryID FOREIGN KEY (FoodCategoryID) REFERENCES Categories (CategoryID),
+	CONSTRAINT FK_EventID FOREIGN KEY (EventID) REFERENCES Events (EventID)
 );
 GO
