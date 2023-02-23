@@ -179,9 +179,9 @@ BEGIN
 	INSERT INTO RecipeSteps (RecipeID, StepNumber, Step) SELECT @LastRecipe, NEXT VALUE FOR NumSteps, value FROM STRING_SPLIT(@Step, ',');
 
 	DECLARE @cnt int = len(@MeasurementType)
-	DECLARE @CurrI varchar (1)
-	DECLARE @CurrQ varchar (1)
-	DECLARE @CurrMT varchar (1)
+	DECLARE @CurrI varchar (100)
+	DECLARE @CurrQ varchar (100)
+	DECLARE @CurrMT varchar (100)
 	DECLARE @i int = 1
 
 	WHILE (@i <= @cnt)
