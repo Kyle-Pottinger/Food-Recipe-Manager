@@ -8,6 +8,7 @@ DROP PROCEDURE createCategory, createCourse, createEvent, createIngredient, crea
 DROP VIEW RecipeList;
 DROP SEQUENCE NumSteps;
 
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --CREATING TABLES--
 --INGREDIENTS TABLE--
@@ -67,14 +68,14 @@ CREATE TABLE Recipes(
 );
 GO
 
---QUANTITY TABLE--
-CREATE TABLE Quantity(
-	QuantityID int IDENTITY(1,1) NOT NULL,
+--RECIPEINGREDIENTS TABLE--
+CREATE TABLE RecipeIngredients(
+	RecipeIngredientsID int IDENTITY(1,1) NOT NULL,
 	RecipeID int NULL,
 	IngredientID int NULL,
 	MeasurementTypeID int NULL,
 	QuantityAmount int NULL,
-	CONSTRAINT PK_Quantity PRIMARY KEY (QuantityID ASC),
+	CONSTRAINT PK_RecipeIngredients PRIMARY KEY (RecipeIngredientsID ASC),
 	CONSTRAINT FK_RecipeID FOREIGN KEY (RecipeID) REFERENCES Recipes (RecipeID),
 	CONSTRAINT FK_MeasurementType FOREIGN KEY (MeasurementTypeID) REFERENCES MeasurementType (MeasurementTypeID),
 	CONSTRAINT FK_IngredientID FOREIGN KEY (IngredientID) REFERENCES Ingredients (IngredientID),
@@ -187,7 +188,7 @@ BEGIN
 		SELECT @CurrMT = SUBSTRING(@MeasurementType, @i, 1)
 		
 		IF @CurrI <> ',' AND @CurrQ <> ',' AND @CurrMT <> ','
-			INSERT INTO Quantity (RecipeID, IngredientID, MeasurementTypeID, QuantityAmount) VALUES (@LastRecipe, @CurrI, @CurrQ, @CurrMT)
+			INSERT INTO RecipeIngredients (RecipeID, IngredientID, MeasurementTypeID, QuantityAmount) VALUES (@LastRecipe, @CurrI, @CurrQ, @CurrMT)
 		SET @i=@i+1
 	END
 END
