@@ -1,16 +1,12 @@
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --DATABASE SETUP--
-USE master;
-GO
-
-DROP DATABASE FoodRecipeManager;
-GO
-
-CREATE DATABASE FoodRecipeManager;
-GO
-
 USE FoodRecipeManager;
 GO
+
+DROP TABLE Quantity, RecipeSteps, Recipes, Ingredients, MeasurementType, Categories, Events, Course;
+DROP PROCEDURE createCategory, createCourse, createEvent, createIngredient, createMeasurementType, createRecipe, spGetRecipeSteps;
+DROP VIEW RecipeList;
+DROP SEQUENCE NumSteps;
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --CREATING TABLES--
@@ -216,13 +212,17 @@ GO
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE VIEW RecipeList
 AS
-
-SELECT RecipeName, RecipeDescription, PrepTime, CookTime, IngredientName, QuantityAmount, MeasurementTypeName
-FROM Recipes AS r
-INNER JOIN Quantity AS q
-ON q.RecipeID = r.RecipeID
-INNER JOIN Ingredients AS i
-ON i.IngredientID = q.IngredientID
-INNER JOIN MeasurementType AS mt
-ON mt.MeasurementTypeID = q.MeasurementTypeID;
+	SELECT RecipeName, RecipeDescription, PrepTime, CookTime, IngredientName, QuantityAmount, MeasurementTypeName
+	FROM Recipes AS r
+	INNER JOIN Quantity AS q
+	ON q.RecipeID = r.RecipeID
+	INNER JOIN Ingredients AS i
+	ON i.IngredientID = q.IngredientID
+	INNER JOIN MeasurementType AS mt
+	ON mt.MeasurementTypeID = q.MeasurementTypeID;
 GO
+
+
+-- SELECT * FROM RecipeList;
+
+EXEC spGetRecipeSteps @recipeName = 'Egg on Toast';
