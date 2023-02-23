@@ -1,13 +1,15 @@
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --DATABASE SETUP--
-USE FoodRecipeManager;
-GO
-
-DROP TABLE Quantity, RecipeSteps, Recipes, Ingredients, MeasurementType, Categories, Events, Course;
+DROP TABLE RecipeIngredients, RecipeSteps, Recipes, Ingredients, MeasurementType, Categories, Events, Course;
 DROP PROCEDURE createCategory, createCourse, createEvent, createIngredient, createMeasurementType, createRecipe, spGetRecipeSteps;
 DROP VIEW RecipeList;
 DROP SEQUENCE NumSteps;
 
+--CREATE DATABASE FoodRecipeManager;
+--GO
+
+--USE FoodRecipeManager;
+--GO
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --CREATING TABLES--
@@ -162,6 +164,10 @@ GO
 CREATE PROCEDURE createRecipe(@RecipeName varchar(120), @RecipeDescription varchar(MAX), @Category varchar (120), @Event varchar (120), @Course varchar (50), @PrepTime varchar(50), @CookTime varchar (50), @Step varchar(8000), @Ingredients varchar(8000), @Quantity varchar(8000), @MeasurementType varchar(8000))
 AS
 BEGIN
+	--RESTARTED THE NUMSTEPS SEQUENCES--
+	ALTER SEQUENCE NumSteps
+    RESTART WITH 1 
+
 	--DECLARING VARIABLES--
 	DECLARE @LastRecipe int = NULL;
 	DECLARE @numSteps int = NULL;
@@ -202,7 +208,7 @@ GO
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE PROCEDURE spGetRecipeSteps
-@recipeName varchar(20)
+@recipeName varchar(1000)
 AS
 BEGIN
 	DECLARE @recipeID INT= (SELECT RecipeID FROM Recipes WHERE RecipeName = @recipeName);
@@ -226,4 +232,4 @@ GO
 
 -- SELECT * FROM RecipeList;
 
-EXEC spGetRecipeSteps @recipeName = 'Egg on Toast';
+EXEC spGetRecipeSteps @recipeName = 'Cucumber with tuna mayo';
