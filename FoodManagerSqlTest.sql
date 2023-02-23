@@ -215,7 +215,7 @@ CREATE VIEW RecipeList
 AS
 	SELECT RecipeName, RecipeDescription, PrepTime, CookTime, IngredientName, QuantityAmount, MeasurementTypeName
 	FROM Recipes AS r
-	INNER JOIN Quantity AS q
+	INNER JOIN RecipeIngredients AS q
 	ON q.RecipeID = r.RecipeID
 	INNER JOIN Ingredients AS i
 	ON i.IngredientID = q.IngredientID
