@@ -138,7 +138,7 @@ BEGIN
 END
 GO
 
-EXEC createIngredient @Ingredients = 'bread,egg(s),milk,water,oil,flour,cheese,butter,chicken,rice,brocolli,cucumber,tuna,mayonnaise,grasshoppers';
+EXEC createIngredient @Ingredients = 'bread,egg(s),milk,water,oil,flour,cheese,butter,chicken,rice,brocolli,cucumber,tuna,mayonnaise,grasshoppers,cakemix,banana,peanutbutter';
 GO
 
 --STORED PROCEDURE TO INSERT MEASUREMENTTYPES INTO THE DATABASE--
@@ -158,8 +158,20 @@ CREATE SEQUENCE NumSteps
     START WITH 1  
     INCREMENT BY 1;  
 GO  
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--USER DEFINED FUNCTION THAT RETURNS THE NUMBER OF INGREDIENTS FOR A RECIPE--
+
+CREATE Function dbo.udf_GetIngredientCount(@recipeID INT)
+Returns INT
+AS
+BEGIN
+	DECLARE @numberOfIngredients INT = (SELECT COUNT(IngredientID) FROM RecipeIngredients WHERE RecipeID = @recipeID)
+	RETURN @numberOfIngredients
+END
+GO
+
+--SELECT FROM dbo.udf_GetIngredientCount(3)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --STORED PROCEDURE TO INSERT DATA INTO THE DATABASE--
 CREATE PROCEDURE createRecipe(@RecipeName varchar(120), @RecipeDescription varchar(MAX), @Category varchar (120), @Event varchar (120), @Course varchar (50), @PrepTime varchar(50), @CookTime varchar (50), @Step varchar(8000), @Ingredients varchar(8000), @Quantity varchar(8000), @MeasurementType varchar(8000))
 AS
@@ -201,8 +213,10 @@ END
 GO
 
 EXEC createRecipe @RecipeName = 'Toast', @RecipeDescription = 'Cooked bread', @Category = 1, @Event = 1, @Course = 1, @PrepTime = '3 Hours', @CookTime = '1.5 Hours', @Step = 'Place 1 slice of bread in a toaster,Enjoy', @Ingredients = '1', @Quantity = '1', @MeasurementType = '5';
-EXEC createRecipe @RecipeName = 'Cucumber with tuna mayo', @RecipeDescription = '', @Category = 1, @Event = 1, @Course = 1, @PrepTime = '3 Hours', @CookTime = '1.5 Hours', @Step = 'Incubate Chicken egg,Hatch Chicken,Get egg,Murder that chicken for fun,Cook the Egg, Cook the Bread,Put egg on toast', @Ingredients = '1,2', @Quantity = '1,2', @MeasurementType = '1,2';
+EXEC createRecipe @RecipeName = 'Cucumber with tuna mayo', @RecipeDescription = 'Cucumber with tuna may without the cucumber and the mayo and egg instead. Also no bread.', @Category = 1, @Event = 1, @Course = 1, @PrepTime = '3 Hours', @CookTime = '1.5 Hours', @Step = 'Incubate Chicken egg,Hatch Chicken,Get egg,Murder that chicken for fun,Cook the Egg, Cook the Bread,Put egg on toast', @Ingredients = '1,2', @Quantity = '1,2', @MeasurementType = '1,2';
 EXEC createRecipe @RecipeName = 'Egg on Toast', @RecipeDescription = 'Its literally egg on toast', @Category = 1, @Event = 1, @Course = 1, @PrepTime = '3 Hours', @CookTime = '1.5 Hours', @Step = 'Incubate Chicken egg,Hatch Chicken,Get egg,Murder that chicken for fun,Cook the Egg,Cook the Bread,Put egg on toast', @Ingredients = '1,2', @Quantity = '1,2', @MeasurementType = '1,2';
+EXEC createRecipe @RecipeName = 'Banana Bread', @RecipeDescription = 'A 3 ingredient banana bread',@Category = 7, @Event = 10, @Course = 2, @PrepTime = '10 mins', @CookTime = '45 mins', @Step = 'Mash bananas,Mix with cake mix and eggs,Bake and enjoy', @Ingredients = '2,16,17', @Quantity = '2,1,1', @MeasurementType = '8,2,7';
+EXEC createRecipe @RecipeName = 'Peanut butter biscuits', @RecipeDescription = 'A 3 ingredient peanut butter biscuit with 99 calories per biscuit',@Category = 5, @Event = 5, @Course = 3, @PrepTime = '10 mins', @CookTime = '15 mins', @Step = 'mix ingredients in a bowl,roll level tablespoons of dough into a ball,flatten with a fork,Bake in oven', @Ingredients = '2,18,8', @Quantity = '1,2,1', @MeasurementType = '1,2,1';
 GO
 
 
