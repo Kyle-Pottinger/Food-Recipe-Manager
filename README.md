@@ -27,27 +27,3 @@ Manage your recipes per events or per food categories
     4) Events *
     5) Food categories * 
     6) Quantity table
-
-- Todo:
-    - Kyle F = Recipe + AWS
-    - Kyle P = Quantity + Ingredients + Repo
-    - Line = Categories + Recipe steps
-    - Hlony = Events (id, ref to rec, desc for event)
-
-- Backlog:
-    - one stores procedure
-    - one user defined function
-    - one view
-    - ERD (crow's foot diagram)
-
-    [Recipe]
-        |
-        |__[Recipe steps]
-        |   
-        |__[Ingredients]
-            |
-        ____|__[Quantity]
-        |
-        |__[Events]
-        |
-        |__[Food categories]
